@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#d3131b"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Ziraat Mobil</title>
+<style>
+:root{--r:#d3131b;--rd:#a50d14;--bg:#f2f2f4;--t:#222;--m:#777;--g:#1b9e4b;--bd:#e3e3e6}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:15px}html,body{margin:0;height:100%;background:#111;color:var(--t);font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,sans-serif;overflow:hidden}
+#app{height:100%;max-width:480px;margin:auto;position:relative;background:var(--bg);overflow:hidden}
+.scr{position:absolute;inset:0;overflow-y:auto;padding-bottom:5.5rem}
+svg{display:block;flex:none}.i{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.red{background:radial-gradient(120% 60% at 20% 55%,#e01b22,transparent 60%),linear-gradient(160deg,#d3131b,#b50f16 60%,#d3131b);color:#fff}
+.top{padding:calc(env(safe-area-inset-top) + .7rem) 1rem .8rem;display:flex;align-items:center;justify-content:space-between;min-height:3.4rem}
+.lg{font-size:1.75rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:.4rem}
+.hd{background:var(--r);color:#fff;padding:calc(env(safe-area-inset-top) + .6rem) 1rem .9rem}
+.hb{display:flex;align-items:center;justify-content:space-between;min-height:2.6rem}.hb b{font-size:1.1rem}.bk{width:2.6rem}
+.bd{padding:1rem}
+.card{background:#fff;border-radius:1rem;padding:1rem;margin-bottom:.9rem;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.row{display:flex;align-items:center;gap:.7rem}.sp{justify-content:space-between}
+.fld{background:#fff;border:1px solid #ccc;border-radius:.7rem;padding:.5rem .8rem .3rem;margin-bottom:.8rem}
+.fld:focus-within{border-color:var(--r);box-shadow:0 0 0 2px rgba(211,19,27,.2)}
+.fld label{display:block;font-size:.78rem;color:var(--m)}.fld input,.fld select{width:100%;border:0;outline:0;background:none;font-size:1.05rem;padding:.2rem 0 .3rem;font-family:inherit;color:var(--t)}
+.btn{width:100%;padding:.95rem;border:0;border-radius:99px;background:var(--r);color:#fff;font-size:1.05rem;font-weight:700;font-family:inherit;margin-top:.3rem}
+.btn.w{background:#fff;color:#111}.btn.o{background:none;border:2px solid #fff}.btn.s{background:#fff;color:var(--r);border:1.5px solid var(--r)}
+.btn:active{opacity:.8}
+.tabs{display:flex;gap:1.3rem;border-bottom:1px solid var(--bd);background:#fff;padding:0 1rem}
+.tabs span{padding:.9rem 0;font-weight:600;color:var(--m)}.tabs .on{color:var(--r);border-bottom:3px solid var(--r)}
+.srch{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:.65rem 1rem;color:#fff;margin-top:.7rem;display:flex;gap:.5rem;align-items:center}
+.br{color:var(--r);font-weight:700;font-size:1.05rem}
+.tag{background:#e8dcc4;color:#6b5a30;border-radius:.4rem;padding:.15rem .6rem;font-size:.8rem;font-weight:600}
+.iban{margin:.7rem 0;font-size:.98rem;display:flex;align-items:center;gap:.4rem}
+.bl{display:flex;gap:1rem;font-size:.8rem;color:var(--m)}.bl b{display:block;color:var(--t);font-size:1.05rem;margin-top:.1rem}
+.g2{display:flex;gap:.6rem;margin-top:1rem}.g2 .btn{margin:0;padding:.75rem;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.grid>div{background:#fff;border-radius:1rem;padding:.9rem .3rem;text-align:center;font-size:.82rem;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.grid .ic{width:2.8rem;height:2.8rem;border-radius:50%;background:#fde8e9;color:var(--r);display:grid;place-items:center;margin:0 auto .45rem}
+.tab{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:480px;display:flex;background:#fff;border-top:1px solid var(--bd);padding:.5rem 0 calc(env(safe-area-inset-bottom) + .4rem);z-index:5}
+.tab div{flex:1;display:flex;flex-direction:column;align-items:center;gap:.2rem;font-size:.75rem;font-weight:600;color:#555}.tab .on{color:var(--r)}
+.tx{display:flex;align-items:center;gap:.7rem;padding:.8rem 1rem;background:#fff;border-bottom:1px solid var(--bd)}
+.tx .c{width:2.5rem;height:2.5rem;border-radius:50%;background:#fde8e9;color:var(--r);display:grid;place-items:center;flex:none}
+.tx .n{font-weight:600;overflow-wrap:anywhere}.tx .d{font-size:.8rem;color:var(--m)}.tx .a{margin-left:auto;font-weight:700;white-space:nowrap}
+.pos{color:var(--g)}.dt{padding:.7rem 1rem .3rem;font-size:.82rem;color:var(--m);font-weight:600}
+.kv{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--bd)}.kv span:first-child{color:var(--m)}.kv span:last-child{text-align:right;overflow-wrap:anywhere;font-weight:600}
+#toast{position:fixed;top:calc(env(safe-area-inset-top) + .6rem);left:50%;transform:translate(-50%,-150px);background:#222;color:#fff;padding:.7rem 1.2rem;border-radius:99px;z-index:30;transition:.3s;max-width:92%;text-align:center;font-weight:600}
+#toast.show{transform:translate(-50%,0)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sh{width:100%;max-width:480px;background:#fff;border-radius:1.4rem 1.4rem 0 0;padding:1.3rem 1rem calc(env(safe-area-inset-bottom) + 1rem)}
+.ok{width:5.5rem;height:5.5rem;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center;margin:2.5rem auto 1rem}
+.x{color:var(--r);font-size:1.3rem;padding:.2rem .5rem}
+.ti{display:flex;gap:.8rem;overflow-x:auto;padding:0 1rem;scrollbar-width:none}
+.ti div{flex:none;width:15rem;background:#fff;border:3px solid #fff;outline:2px solid #fff;border-radius:1rem;padding:.8rem;color:#222;font-weight:700;font-size:.9rem;display:flex;gap:.6rem;align-items:center}
+.ti i{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--r);flex:none}
+.bt{position:absolute;left:0;right:0;bottom:0;background:#fff;display:flex;padding:.8rem .2rem calc(env(safe-area-inset-bottom) + .5rem);color:var(--r)}
+.bt div{flex:1;text-align:center;font-size:.78rem;color:#222;display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.tog{width:3.2rem;height:1.9rem;border-radius:99px;background:#ccc;position:relative;flex:none}.tog:after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.5rem;height:1.5rem;border-radius:50%;background:#fff;transition:.2s}.tog.on{background:var(--g)}.tog.on:after{left:1.5rem}
+h3{margin:.2rem 0 .7rem}
+</style></head><body>
+<div id="app"></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+let DB={};try{DB=JSON.parse(localStorage.zb||'null')||{}}catch(e){}
+if(!DB.users){try{if(window.name.startsWith('ZB:'))DB=JSON.parse(window.name.slice(3))}catch(e){}}
+DB.users=DB.users||{};
+const save=()=>{const s=JSON.stringify(DB);try{localStorage.zb=s}catch(e){}try{window.name='ZB:'+s}catch(e){}};
+let view='welcome',tab='home',sub=null,arg=null,me=null,H=[],draft={},ht='acc',vis={};
+const AN={vad:'Vadesiz TL',vdl:'Vadeli TL'};
+const MO=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const BR=['Merkez Şube','Arnavutköy Boğaziçi Şube','Kadıköy Şube','Ankara Kızılay Şube','İzmir Alsancak Şube'];
+const P={bk:'<path d="M20 12H4M10 5.5L4 12l6 6.5"/>',home:'<path d="M12 3L3 10.5V21h6.3v-6h5.4v6H21V10.5z"/>',acc:'<rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10.5h18M7 15h4"/>',menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',prof:'<circle cx="12" cy="8" r="4"/><path d="M4 21c.4-4.5 3.7-6.5 8-6.5s7.6 2 8 6.5z"/>',send:'<path d="M4 12h14M13 6l6 6-6 6"/>',swap:'<path d="M4 8h16l-4-4M20 16H4l4 4"/>',qr:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM19 19h2M14 20h1"/>',calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h4M8 16h2M12 16h4"/>',chart:'<path d="M3 20h18M5 16l4-5 4 3 6-8"/>',doc:'<path d="M6 3h8l5 5v13H6z"/><path d="M9 13h7M9 17h7"/>',card:'<rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6.5L20.5 7"/>',lock:'<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',srch:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l5 5"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/>',cp:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',chk:'<path d="M4.5 12.5l5 5 10-11" stroke-width="2.6"/>',eur:'<path d="M17 6.5a6 6 0 1 0 0 11M4 10h9M4 14h9"/>',phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/>',plus:'<path d="M12 5v14M5 12h14"/>',coin:'<circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1 1.2-1.7 3-1.7s3 .7 3 1.7-1.2 1.5-3 2-3 1-3 2.2 1.2 1.800 3 1.800 3-.8 3-1.800"/>'};
+const ico=(n,s=24)=>`<svg class="i" width="${s}" height="${s}" viewBox="0 0 24 24">${P[n]}</svg>`;
+const WH='<svg width="30" height="34" viewBox="0 0 24 28" fill="#fff"><path d="M12 1c2 3 2 6 0 9-2-3-2-6 0-9zM7 6c3 1 4 4 3 7-3-1-4-4-3-7zM17 6c1 3 0 6-3 7-1-3 0-6 3-7zM6 13c3 0 5 2 5 5-3 0-5-2-5-5zM18 13c0 3-2 5-5 5 0-3 2-5 5-5zM12 12c1.500 3 1.500 9 0 16-1.500-7-1.500-13 0-16z"/></svg>';
+const LOGO=`<div class="lg">${WH}<span>Ziraat Bankası</span></div>`;
+const pad=n=>String(n).padStart(2,'0');
+const tl=n=>n.toLocaleString('tr-TR',{minimumFractionDigits:2,maximumFractionDigits:2})+' TL';
+const num=s=>parseFloat(String(s).replace(/\./g,'').replace(',','.'));
+const rnd=n=>Array.from({length:n},()=>Math.floor(Math.random()*10)).join('');
+const fakeIban=()=>'TR'+rnd(2)+'00010'+'0'+rnd(16);
+const fmtI=i=>i.replace(/\s/g,'').replace(/(.{4})/g,'$1 ').trim();
+const dstr=d=>`${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
+const val=id=>(($('#'+id)||{}).value||'');
+const U=()=>DB.users[me];
+const bal=a=>{const u=U();return Math.round((u.base[a]+u.tx.filter(t=>t.acc===a).reduce((s,t)=>s+t.amt,0))*100)/100};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t.h);t.h=setTimeout(()=>t.classList.remove('show'),2400)}
+const go=(v,t,s,a)=>{view=v;if(t)tab=t;sub=s||null;arg=a;draft={};H=[];render()};
+const nav=(s,a)=>{H.push([sub,arg]);sub=s;arg=a;render()};
+const back=()=>{const p=H.pop()||[null];sub=p[0];arg=p[1];render()};
+const hd=t=>`<div class="hd"><div class="hb"><div class="bk" onclick="back()">${ico('bk',26)}</div><b>${t}</b><div class="bk"></div></div></div>`;
+const fld=(id,l,v,ex)=>`<div class="fld"><label>${l}</label><input id="${id}" value="${v||''}" ${ex||''}></div>`;
+const ibanOf=a=>fmtI(a==='vad'?U().iban:U().iban2);
+const eurRate=()=>U().cfg.rate;
+
+/* Zinsen: täglich auf dem Vadeli-Konto */
+function accrue(){
+  const u=U(),c=u.cfg,now=Date.now();let ch=0,n=0;
+  while(u.last+864e5<=now&&n<400){
+    u.last+=864e5;n++;
+    const b=bal('vdl');
+    const amt=c.mode==='eur'?c.eurDay*c.rate:b*c.pct/100/365;
+    if(amt>0){u.tx.push({id:u.last+Math.random(),t:u.last,acc:'vdl',amt:Math.round(amt*100)/100,n:'Faiz Geliri',s:c.mode==='eur'?`Günlük ${c.eurDay} EUR · Kur ${c.rate}`:`Yıllık %${c.pct} · günlük`,k:'faiz'});ch=1}
+  }
+  if(ch){u.mail.push({t:now,h:'Faiz Geliri',b:`Vadeli hesabınıza ${n} günlük faiz geliri yatırıldı.`});}
+  if(ch||n)save();
+}
+function render(){
+  if(view==='welcome'){
+    app.innerHTML=`<div class="scr red" style="padding:0">
+    <div class="top"><span style="font-weight:600">TR</span>${LOGO}<span>${ico('chat',28)}</span></div>
+    <div class="ti" style="margin-top:.8rem"><div><i></i>Maaş<br>Ödemeleri</div><div><i></i>Koyu Tema Seçeneği Ziraat Mobil'de</div><div><i></i>Bankkart Seyahat Ziraat'te</div></div>
+    <div style="margin-top:7.5rem;text-align:center"><div style="font-size:1.05rem">Ziraat Mobil'e</div><div style="font-size:2.4rem;font-weight:700;margin-bottom:2.5rem">Hoş Geldiniz</div></div>
+    <div style="padding:0 2.4rem"><button class="btn w" style="padding:1.2rem;font-size:1.3rem" onclick="go('login')">Giriş Yap</button><button class="btn o" style="margin-top:1rem;padding:1rem;font-weight:500" onclick="go('reg')">Ziraat'li Olmak İstiyorum</button></div>
+    <div class="bt" style="color:#fff;background:#fff"><div>${ico('chart',26)}<span>FAST<br>İşlemleri</span></div><div>${ico('qr',26)}<span>QR Kod<br>İşlemleri</span></div><div>${ico('phone',26)}<span>Şubesiz<br>Yap</span></div><div>${ico('chk',26)}<span>Ziraat<br>Onay</span></div><div>${ico('menu',26)}<span>Diğer<br>İşlemler</span></div></div></div>`;return}
+  if(view==='login'){
+    const r=DB.rem||{};
+    app.innerHTML=`<div class="scr"><div class="hd"><div class="hb"><div class="bk" onclick="go('welcome')">${ico('bk',26)}</div><b>Giriş Yap</b><div class="bk"></div></div></div><div class="bd"><div style="text-align:center;margin:1.5rem 0;color:var(--r)">${LOGO.replace('class="lg"','class="lg" style="justify-content:center"').replace(/fill="#fff"/,'fill="#d3131b"')}</div>
+    ${fld('ln','Müşteri Numarası / Kullanıcı Adı',r.l,'autocapitalize="off" autocorrect="off"')}${fld('lp','Şifre',r.p,'type="password" inputmode="numeric" onkeydown="if(event.key===\'Enter\')doLogin()"')}
+    <div class="row sp" style="margin:.2rem .2rem 1rem"><span>Beni hatırla</span><div class="tog ${DB.rem?'on':''}" onclick="this.classList.toggle('on')"></div></div>
+    <button class="btn" onclick="doLogin()">Giriş Yap</button><p style="text-align:center;color:var(--r);font-weight:600" onclick="go('reg')">Hesap oluştur</p></div></div>`;return}
+  if(view==='reg'){
+    app.innerHTML=`<div class="scr"><div class="hd"><div class="hb"><div class="bk" onclick="go('welcome')">${ico('bk',26)}</div><b>Ziraat'li Ol</b><div class="bk"></div></div></div><div class="bd">
+    ${fld('rn','Ad Soyad')}${fld('rl','Kullanıcı Adı','','autocapitalize="off"')}${fld('rp','Şifre (en az 4 rakam)','','type="password" inputmode="numeric"')}${fld('rp2','Şifre tekrar','','type="password" inputmode="numeric"')}
+    <h3>Başlangıç bakiyesi</h3>${fld('rb','Vadesiz TL bakiye (TL)','20.000,00','inputmode="decimal"')}${fld('rs','Vadeli TL bakiye (TL)','50.000,00','inputmode="decimal"')}
+    <h3>Faiz &amp; Kur</h3>${fld('rk','1 EUR = ? TL','50,00','inputmode="decimal"')}
+    <div class="fld"><label>Faiz türü</label><select id="rm"><option value="eur">Günlük sabit EUR tutar</option><option value="pct">Yıllık faiz oranı (%)</option></select></div>
+    ${fld('re','Günlük faiz (EUR)','2,00','inputmode="decimal"')}${fld('rr','Yıllık faiz oranı (%)','45','inputmode="decimal"')}
+    <button class="btn" onclick="doReg()">Hesap Oluştur</button></div></div>`;return}
+  accrue();
+  app.innerHTML=`<div class="scr">${sub?subv():main()}</div>${sub?'':tabbar()}`;
+}
+function doReg(){
+  const n=val('rn').trim(),l=val('rl').trim().toLowerCase(),p=val('rp');
+  if(!n||!l)return toast('Lütfen tüm alanları doldurun');
+  if(DB.users[l])return toast('Bu kullanıcı adı alınmış');
+  if(!/^\d{4,}$/.test(p))return toast('Şifre en az 4 rakam olmalı');
+  if(p!==val('rp2'))return toast('Şifreler eşleşmiyor');
+  const b=num(val('rb')),s=num(val('rs')),k=num(val('rk')),e=num(val('re')),r=num(val('rr'));
+  DB.users[l]={name:n,pin:p,no:rnd(8),br:BR[Math.floor(Math.random()*BR.length)],iban:fakeIban(),iban2:fakeIban(),base:{vad:isNaN(b)?0:b,vdl:isNaN(s)?0:s},tx:[],last:Date.now(),
+   cfg:{rate:isNaN(k)||k<=0?50:k,mode:val('rm'),eurDay:isNaN(e)?2:e,pct:isNaN(r)?45:r},lock:false,
+   mail:[{t:Date.now(),h:'Hoş geldiniz',b:'Ziraat Mobil erişiminiz başarıyla oluşturuldu.'}]};
+  me=l;save();toast('Hoş geldiniz, '+n.split(' ')[0]);go('app','home')
+}
+function doLogin(){
+  const l=val('ln').trim().toLowerCase(),u=DB.users[l];
+  if(!u||u.pin!==val('lp').trim())return toast('Kullanıcı adı veya şifre hatalı');
+  if($('.tog.on'))DB.rem={l:val('ln').trim(),p:val('lp')};else delete DB.rem;
+  save();me=l;go('app','home')
+}
+function tabbar(){return`<div class="tab">${[['home','home','Ana Sayfa'],['acc','acc','Hesaplarım'],['menu','menu','İşlemler'],['prof','prof','Profil']].map(t=>`<div class="${tab===t[0]?'on':''}" onclick="go('app','${t[0]}')">${ico(t[1],25)}${t[2]}</div>`).join('')}</div>`}
+function main(){return tab==='home'?home():tab==='acc'?`<div class="hd"><div class="hb"><div class="bk"></div><b>Hesaplarım</b><div class="bk"></div></div></div><div class="bd">${accs()}</div>`:tab==='menu'?menu():prof()}
+const accCard=a=>{const u=U(),b=bal(a);return`<div class="card" onclick="nav('konto','${a}')"><div class="br">${u.br}</div><div class="row" style="margin-top:.4rem"><span class="tag">${AN[a]}</span><span style="color:var(--m);font-size:.85rem">${u.no}-${a==='vad'?'1':'2'}</span></div>
+<div class="iban">${ibanOf(a)}<span onclick="event.stopPropagation();cp('${a==='vad'?u.iban:u.iban2}')" style="color:var(--r)">${ico('cp',16)}</span></div>
+<div class="bl"><div>Kullanılabilir Bakiye<b>${tl(b)}</b></div><div>Toplam Bakiye<b>${tl(b)}</b></div></div></div>`};
+const accs=()=>accCard('vad')+accCard('vdl');
+function cp(t){navigator.clipboard&&navigator.clipboard.writeText(t);toast('IBAN kopyalandı')}
+function home(){
+  const u=U(),tot=bal('vad')+bal('vdl');
+  const body=ht==='acc'?`<div class="bd" style="padding-bottom:0">${accCard('vad')}${accCard('vdl')}<div class="g2" style="margin:0 0 1rem"><button class="btn" onclick="go('app','acc')">Tüm Hesaplarım</button><button class="btn s" onclick="nav('konto','vdl')">Diğer Hesaplarım</button></div></div>`
+   :ht==='card'?`<div class="bd"><div class="card" style="background:linear-gradient(135deg,#d3131b,#5a0a0e);color:#fff;height:10.5rem;position:relative;opacity:${u.lock?.45:1}"><b>Ziraat Bankası · Bankkart</b><div style="position:absolute;bottom:3.2rem;font-size:1.25rem;letter-spacing:2px">•••• •••• •••• ${u.iban.slice(-4)}</div><div style="position:absolute;bottom:1rem">${u.name.toUpperCase()}</div></div><div class="card row sp"><div><b>Kartı kilitle</b><div style="color:var(--m);font-size:.85rem">${u.lock?'Ödemeler reddedilir':'Kart aktif'}</div></div><div class="tog ${u.lock?'on':''}" onclick="U().lock=!U().lock;save();render()"></div></div></div>`
+   :`<div class="bd"><div class="card"><div style="color:var(--m)">Toplam Varlık</div><div style="font-size:1.9rem;font-weight:700;color:var(--g)">${tl(tot)}</div><div style="color:var(--m);font-size:.85rem">≈ ${(tot/eurRate()).toLocaleString('tr-TR',{maximumFractionDigits:2})} EUR</div></div><div class="card"><div class="kv"><span>Vadesiz TL</span><span>${tl(bal('vad'))}</span></div><div class="kv" style="border:0"><span>Vadeli TL</span><span>${tl(bal('vdl'))}</span></div></div></div>`;
+  return`<div class="red" style="padding-bottom:1rem"><div class="top" style="padding-bottom:0"><span>${ico('menu',26)}</span>${LOGO}<span onclick="nav('mail')">${ico('mail',26)}</span></div><div style="padding:0 1rem"><div class="srch" onclick="nav('gs')">${ico('srch',20)}Ziraat Mobil'de Ara</div></div></div>
+  <div class="tabs">${[['acc','Hesaplarım'],['card','Kredi Kartlarım'],['pf','Portföyüm']].map(t=>`<span class="${ht===t[0]?'on':''}" onclick="ht='${t[0]}';render()">${t[1]}</span>`).join('')}</div>${body}
+  <div class="bd" style="padding-top:0"><h3>Hızlı İşlemler</h3>${quick()}</div>`}
+function quick(){const I=[['send','Para Transferi',"draft={from:'vad'};nav('send')"],['swap','Hesaplar Arası',"draft={from:'vad',own:1};nav('send')"],['chart','FAST','nav(\'send\')'],['qr','QR Kod',"toast('QR okutulamadı: kamera yok')"],['calc','Hesaplama Araçları',"nav('calc')"],['eur','Finansal Veriler',"nav('fx')"]];
+  return`<div class="grid">${I.map(i=>`<div onclick="${i[2]}"><div class="ic">${ico(i[0],24)}</div>${i[1]}</div>`).join('')}</div>`}
+function menu(){const I=[['send','Para Transferi',"draft={from:'vad'};nav('send')"],['swap','Hesaplar Arası Transfer',"draft={from:'vad',own:1};nav('send')"],['doc','Hesap Hareketleri',"nav('konto','vad')"],['doc','Hesap Özeti',"nav('stmt')"],['calc','Hesaplama Araçları',"nav('calc')"],['eur','Finansal Veriler',"nav('fx')"],['mail','Mesajlarım',"nav('mail')"],['lock','Yönetici Menüsü (Ayarlar)',"nav('admin')"]];
+  return`<div class="hd"><div class="hb"><div class="bk"></div><b>İşlemler</b><div class="bk"></div></div></div><div class="bd">${I.map(i=>`<div class="card row sp" onclick="${i[2]}"><div class="row"><div class="ic" style="width:2.6rem;height:2.6rem;border-radius:50%;background:#fde8e9;color:var(--r);display:grid;place-items:center">${ico(i[0],22)}</div><b>${i[1]}</b></div>${ico('send',18)}</div>`).join('')}</div>`}
+function prof(){const u=U();return`<div class="hd"><div class="hb"><div class="bk"></div><b>Profil</b><div class="bk"></div></div></div><div class="bd"><div class="card" style="text-align:center"><div style="font-size:1.3rem;font-weight:700">${u.name}</div><div style="color:var(--m)">Müşteri No: ${u.no} · @${me}</div></div><div class="card">${fld('np','Yeni Şifre','','type="password" inputmode="numeric"')}<button class="btn s" onclick="chPin()">Şifreyi Değiştir</button></div><button class="btn" onclick="me=null;go('welcome')">Çıkış Yap</button><button class="btn s" onclick="if(confirm('Hesap silinsin mi?')){delete DB.users[me];save();me=null;go('welcome')}">Hesabı Sil</button></div>`}
+function chPin(){const p=val('np');if(!/^\d{4,}$/.test(p))return toast('En az 4 rakam');U().pin=p;save();toast('Şifre değiştirildi')}
+function subv(){return({konto,send,done,stmt,mail,admin,tx:txd,calc,fx,gs})[sub]()}
+function tic(t){return`<div class="c">${ico(t.k==='faiz'?'coin':t.k==='in'?'plus':t.k==='own'?'swap':t.k==='card'?'card':'send',20)}</div>`}
+function txs(list){let lk='',h='';[...list].sort((a,b)=>b.t-a.t).forEach(t=>{const d=new Date(t.t),k=`${d.getDate()} ${MO[d.getMonth()]} ${d.getFullYear()}`;if(k!==lk){h+=`<div class="dt">${k}</div>`;lk=k}
+ h+=`<div class="tx" onclick="nav('tx','${t.id}')">${tic(t)}<div style="min-width:0"><div class="n">${t.n}</div><div class="d">${t.s||''}</div></div><div class="a ${t.amt>0?'pos':''}">${t.amt>0?'+':'−'}${tl(Math.abs(t.amt))}</div></div>`});
+ return h||'<div style="text-align:center;color:var(--m);margin:2.5rem 0">Hareket bulunamadı</div>'}
+function konto(){const a=arg,o=a==='vad'?'vdl':'vad',c=U().cfg;
+ return`<div class="hd" style="padding-bottom:1.2rem"><div class="hb"><div class="bk" onclick="back()">${ico('bk',26)}</div><b>${AN[a]}</b><div class="bk" onclick="arg='${o}';render()" style="text-align:right">${ico('swap',22)}</div></div><div style="text-align:center;margin-top:.6rem;opacity:.85">Kullanılabilir Bakiye</div><div style="text-align:center;font-size:2rem;font-weight:700">${tl(bal(a))}</div><div style="text-align:center;opacity:.85;font-size:.85rem">${ibanOf(a)}</div>${a==='vdl'?`<div style="text-align:center;font-size:.8rem;margin-top:.4rem;opacity:.9">${c.mode==='eur'?`Günlük faiz: ${c.eurDay} EUR ≈ ${tl(c.eurDay*c.rate)}`:`Faiz oranı: %${c.pct} yıllık`}</div>`:''}</div>
+ <div class="bd" style="padding:.8rem 0 0"><div class="g2" style="padding:0 1rem;margin:0 0 .5rem"><button class="btn" onclick="draft={from:'${a}'};nav('send')">Para Gönder</button><button class="btn s" onclick="nav('det','${a}')" id="dd">Hesap Bilgileri</button></div>${txs(U().tx.filter(t=>t.acc===a))}</div>`}
+function txd(){const t=U().tx.find(x=>String(x.id)===String(arg));if(!t)return hd('İşlem');const d=new Date(t.t);
+ return hd('İşlem Detayı')+`<div class="bd"><div class="card" style="text-align:center"><b>${t.n}</b><div style="font-size:1.9rem;font-weight:700;margin-top:.4rem" class="${t.amt>0?'pos':''}">${t.amt>0?'+':'−'}${tl(Math.abs(t.amt))}</div></div><div class="card"><div class="kv"><span>Tarih</span><span>${dstr(d)}</span></div><div class="kv"><span>Saat</span><span>${pad(d.getHours())}:${pad(d.getMinutes())}</span></div><div class="kv"><span>Açıklama</span><span>${t.s||'–'}</span></div>${t.iban?`<div class="kv"><span>IBAN</span><span>${fmtI(t.iban)}</span></div>`:''}<div class="kv" style="border:0"><span>Hesap</span><span>${AN[t.acc]}</span></div></div></div>`}
+function stmt(){const m={};U().tx.forEach(t=>{const d=new Date(t.t),k=MO[d.getMonth()]+' '+d.getFullYear();m[k]=m[k]||{i:0,o:0,n:0};m[k][t.amt>0?'i':'o']+=t.amt;m[k].n++});
+ return hd('Hesap Özeti')+`<div class="bd">${Object.keys(m).map(k=>`<div class="card"><div class="row sp"><b>${k}</b><span style="color:var(--m)">${m[k].n} işlem</span></div><div class="kv"><span>Gelen</span><span class="pos">${tl(m[k].i)}</span></div><div class="kv" style="border:0"><span>Giden</span><span>${tl(m[k].o)}</span></div></div>`).join('')||'<div style="text-align:center;color:var(--m);margin:2rem">Henüz özet yok</div>'}</div>`}
+function mail(){return hd('Mesajlarım')+`<div class="bd">${[...U().mail].reverse().map(x=>`<div class="card"><b>${x.h}</b><div style="color:var(--m);font-size:.8rem">${dstr(new Date(x.t))}</div><p style="margin:.5rem 0 0">${x.b}</p></div>`).join('')}</div>`}
+function sv(){draft.n=val('sn');draft.i=val('si');draft.a=val('sa');draft.z=val('sz')}
+function send(){const D=draft,from=D.from||'vad',own=D.own;
+ return hd(own?'Hesaplar Arası Transfer':'Para Transferi')+`<div class="bd"><div class="fld"><label>Gönderen Hesap</label><select id="sf" onchange="sv();draft.from=this.value;render()">${['vad','vdl'].map(a=>`<option value="${a}" ${a===from?'selected':''}>${AN[a]} · ${tl(bal(a))}</option>`).join('')}</select></div>
+ <div class="fld"><label>Alıcı</label><select onchange="sv();draft.own=this.value==='own'?1:0;render()"><option value="ext" ${own?'':'selected'}>Başka IBAN'a</option><option value="own" ${own?'selected':''}>Kendi hesabıma (${AN[from==='vad'?'vdl':'vad']})</option></select></div>
+ ${own?'':fld('sn','Alıcı Ad Soyad',D.n)+fld('si','IBAN',D.i,'placeholder="TR00 0000 0000 0000 0000 0000 00"')}${fld('sa','Tutar (TL)',D.a,'inputmode="decimal"')}${fld('sz','Açıklama',D.z)}<button class="btn" onclick="sendGo()">Devam</button></div>`}
+function sendGo(){sv();const from=draft.from||'vad',own=draft.own,a=Math.abs(num(draft.a));
+ if(!a)return toast('Tutar giriniz');
+ if(!own){if(!draft.n.trim())return toast('Alıcı adı eksik');if(!/^TR\d{24}$/.test(draft.i.replace(/\s/g,'').toUpperCase()))return toast('Geçersiz IBAN (TR + 24 rakam)')}
+ if(bal(from)<a)return toast('Yetersiz bakiye');
+ pin(()=>{const u=U(),now=Date.now(),to=from==='vad'?'vdl':'vad';
+  if(own)u.tx.push({id:now,t:now,acc:from,amt:-a,n:'Hesaplar Arası → '+AN[to],s:draft.z||'Virman',k:'own'},{id:now+1,t:now,acc:to,amt:a,n:'Hesaplar Arası ← '+AN[from],s:draft.z||'Virman',k:'own'});
+  else u.tx.push({id:now,t:now,acc:from,amt:-a,n:draft.n.trim(),s:draft.z||'Havale/EFT',k:'out',iban:draft.i.replace(/\s/g,'').toUpperCase()});
+  save();const x={a,own,n:draft.n};H=[];sub='done';arg=x;render()})}
+function done(){const x=arg;return`<div class="bd" style="text-align:center;padding-top:3rem"><div class="ok">${ico('chk',50)}</div><h2 style="margin:0">İşlem Başarılı</h2><p style="color:var(--m)">${tl(x.a)} ${x.own?'hesaplarınız arasında aktarıldı.':x.n+' kişisine gönderildi.'}</p><button class="btn" style="margin-top:2rem" onclick="go('app','home')">Tamam</button></div>`}
+function pin(cb){const o=document.createElement('div');o.className='ov';o.innerHTML=`<div class="sh"><h3>Ziraat Onay</h3><div style="color:var(--m);margin-bottom:1rem">İşlemi onaylamak için şifrenizi girin</div><div class="fld"><label>Şifre</label><input id="pc" type="password" inputmode="numeric"></div><button class="btn" id="pk">Onayla</button><button class="btn s" id="pa">Vazgeç</button></div>`;
+ document.body.appendChild(o);$('#pc').focus();$('#pa').onclick=()=>o.remove();$('#pk').onclick=()=>{if($('#pc').value===U().pin){o.remove();cb()}else toast('Şifre hatalı')}}
+function det(){const a=arg,u=U();return hd('Hesap Bilgileri')+`<div class="bd"><div class="card"><div class="kv"><span>Hesap Türü</span><span>${AN[a]}</span></div><div class="kv"><span>Hesap Sahibi</span><span>${u.name}</span></div><div class="kv"><span>Şube</span><span>${u.br}</span></div><div class="kv"><span>IBAN</span><span>${ibanOf(a)}</span></div><div class="kv"><span>Para Birimi</span><span>TRY</span></div><div class="kv" style="border:0"><span>Bakiye</span><span>${tl(bal(a))}</span></div></div><button class="btn" onclick="cp('${a==='vad'?u.iban:u.iban2}')">IBAN Kopyala</button></div>`}
+function fx(){const r=eurRate();return hd('Finansal Veriler')+`<div class="bd"><div class="card"><div class="kv"><span>EUR / TRY</span><span>${r.toLocaleString('tr-TR',{minimumFractionDigits:4})}</span></div><div class="kv"><span>USD / TRY</span><span>${(r*1.08).toLocaleString('tr-TR',{minimumFractionDigits:4})}</span></div><div class="kv" style="border:0"><span>Altın (gr)</span><span>${tl(r*80)}</span></div></div><div style="color:var(--m);font-size:.85rem">Simülasyon: Kur im Admin-Menü einstellbar.</div></div>`}
+function calc(){setTimeout(cc,0);const c=U().cfg;return hd('Faiz Hesaplama')+`<div class="bd">${fld('k0','Anapara (TL)',String(Math.round(bal('vdl'))),'inputmode="decimal" oninput="cc()"')}${fld('k1','Süre (gün)','30','inputmode="numeric" oninput="cc()"')}<div class="card" id="cr"></div></div>`}
+function cc(){const el=$('#cr');if(!el)return;const c=U().cfg,P=num(val('k0'))||0,d=parseInt(val('k1'))||0;let b=P;
+ for(let i=0;i<d;i++)b+=c.mode==='eur'?c.eurDay*c.rate:b*c.pct/100/365;
+ const kv=(a,b,g)=>`<div class="kv"><span>${a}</span><span class="${g?'pos':''}">${b}</span></div>`;
+ el.innerHTML=kv('Günlük faiz (güncel)',tl(c.mode==='eur'?c.eurDay*c.rate:P*c.pct/100/365))+kv('Toplam faiz',tl(b-P))+kv('Vade sonu',tl(b),1)}
+function admin(){const u=U(),c=u.cfg,n=new Date(),dv=`${n.getFullYear()}-${pad(n.getMonth()+1)}-${pad(n.getDate())}T${pad(n.getHours())}:${pad(n.getMinutes())}`;
+ const list=[...u.tx].sort((a,b)=>b.t-a.t).slice(0,8).map(t=>`<div class="kv"><span style="color:var(--t);font-weight:600">${t.n}<br><small style="color:var(--m)">${tl(t.amt)}</small></span><span class="x" onclick="U().tx=U().tx.filter(x=>x.id!==${t.id});save();render()">✕</span></div>`).join('');
+ return hd('Yönetici Menüsü')+`<div class="bd"><div class="card"><h3>Faiz &amp; Kur</h3>${fld('ck','1 EUR = ? TL',String(c.rate).replace('.',','),'inputmode="decimal"')}
+ <div class="fld"><label>Faiz türü</label><select id="cm"><option value="eur" ${c.mode==='eur'?'selected':''}>Günlük sabit EUR tutar</option><option value="pct" ${c.mode==='pct'?'selected':''}>Yıllık faiz oranı (%)</option></select></div>
+ ${fld('ce','Günlük faiz (EUR)',String(c.eurDay).replace('.',','),'inputmode="decimal"')}${fld('cp','Yıllık oranı (%)',String(c.pct).replace('.',','),'inputmode="decimal"')}<button class="btn" onclick="setCfg()">Kaydet</button>
+ <div class="fld" style="margin-top:.8rem"><label>Zeit simulieren: Tage vorspulen</label><input id="cd" value="7" inputmode="numeric"></div><button class="btn s" onclick="skip()">Tage vorspulen (Zinsen buchen)</button></div>
+ <div class="card"><h3>İşlem Ekle</h3><div class="fld"><label>Tür</label><select id="at"><option value="card">Kartla ödeme</option><option value="out">Giden havale</option><option value="in">Gelen havale</option></select></div>
+ <div class="fld"><label>Hesap</label><select id="ac"><option value="vad">Vadesiz TL</option><option value="vdl">Vadeli TL</option></select></div>
+ ${fld('an','İsim / Yer','','placeholder="BİM, Migros, ..."')}${fld('aa','Tutar (TL)','','inputmode="decimal"')}${fld('as','Açıklama')}${fld('ad','Tarih & Saat',dv,'type="datetime-local"')}<button class="btn" onclick="addTx()">Kaydet</button></div>
+ <div class="card"><h3>Bakiye Ayarla</h3><div class="fld"><label>Hesap</label><select id="bk"><option value="vad">Vadesiz TL</option><option value="vdl">Vadeli TL</option></select></div>${fld('ab','Yeni bakiye (TL)','','inputmode="decimal"')}<button class="btn s" onclick="setBal()">Uygula</button></div>
+ <div class="card"><h3>Son İşlemler</h3>${list||'–'}</div></div>`}
+function setCfg(){const c=U().cfg,k=num(val('ck')),e=num(val('ce')),p=num(val('cp'));if(!(k>0))return toast('Geçersiz kur');c.rate=k;c.mode=val('cm');if(!isNaN(e))c.eurDay=e;if(!isNaN(p))c.pct=p;save();toast('Ayarlar kaydedildi');render()}
+function skip(){const d=Math.min(365,Math.max(1,parseInt(val('cd'))||1));U().last-=d*864e5;save();render();toast(d+' gün ilerletildi')}
+function addTx(){const u=U(),ty=val('at'),n=val('an').trim(),a=Math.abs(num(val('aa'))),d=new Date(val('ad')||Date.now());
+ if(!n||!a)return toast('İsim ve tutar giriniz');if(ty==='card'&&u.lock)return toast('Kart kilitli');
+ u.tx.push({id:Date.now(),t:d.getTime(),acc:val('ac'),k:ty,amt:ty==='in'?a:-a,n:ty==='card'?n.toUpperCase():n,s:val('as')||(ty==='card'?'Bankkart Harcaması':ty==='in'?'Gelen Havale':'Giden Havale')});save();toast('İşlem kaydedildi');render()}
+function setBal(){const u=U(),a=val('bk'),v=num(val('ab'));if(isNaN(v))return toast('Geçersiz tutar');u.base[a]=v-u.tx.filter(t=>t.acc===a).reduce((s,t)=>s+t.amt,0);save();toast('Bakiye güncellendi');render()}
+const ACT=[['Para Transferi','havale eft gönder transfer',()=>{draft={from:'vad'};nav('send')}],['Hesaplar Arası','virman vadeli vadesiz',()=>{draft={from:'vad',own:1};nav('send')}],['Vadesiz TL','hesap bakiye',()=>nav('konto','vad')],['Vadeli TL','hesap faiz mevduat',()=>nav('konto','vdl')],['Faiz Hesaplama','hesaplama faiz',()=>nav('calc')],['Finansal Veriler','döviz kur euro dolar altın',()=>nav('fx')],['Hesap Özeti','ekstre özet',()=>nav('stmt')],['Mesajlarım','mesaj posta',()=>nav('mail')],['Yönetici Menüsü','admin ayar',()=>nav('admin')]];
+function gs(){const t=(draft.q||'').toLowerCase().split(/\s+/).filter(Boolean);const A=ACT.map((a,i)=>({a,i})).filter(x=>!t.length||t.every(w=>(x.a[0]+' '+x.a[1]).toLowerCase().includes(w)));
+ return hd('Ara')+`<div class="bd"><div class="fld"><label>Ne yapmak istersiniz?</label><input id="gq" value="${draft.q||''}" oninput="draft.q=this.value;const p=this.selectionStart;render();const e=$('#gq');e.focus();e.setSelectionRange(p,p)"></div>${A.map(x=>`<div class="card row sp" onclick="ACT[${x.i}][2]()"><b>${x.a[0]}</b>${ico('send',18)}</div>`).join('')}</div>`}
+render();
+</script></body></html>
